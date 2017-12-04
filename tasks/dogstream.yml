@@ -1,0 +1,15 @@
+- name: Make sure datadog parser dir exists
+  file:
+    path: /usr/share/datadog/agent/dogstream
+    state: directory
+    owner: dd-agent
+
+
+- name: Copy dogstream parse script over
+  copy:
+    src: "{{item.src}}"
+    dest: "/usr/share/datadog/agent/dogstream/{{item.dest}}"
+    owner: dd-agent
+    mode: 0644
+  with_items: "{{datadog_dogstream_files}}"
+  notify: restart datadog-agent

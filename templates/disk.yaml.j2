@@ -1,0 +1,11 @@
+init_config:
+instances:
+  - name: Root Disk
+    excluded_mountpoint_re: /mnt/.*
+    excluded_filesystems:
+      - tmpfs
+      - nfs
+      - nsfs
+      - shm
+    tags:
+      - "instance:{{cs_hostname}}"

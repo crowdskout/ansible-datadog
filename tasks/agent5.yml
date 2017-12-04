@@ -16,12 +16,13 @@
 - debug: 'msg="[DEPRECATION NOTICE] Using `datadog_process_checks` is deprecated, use `process` under `datadog_checks` instead"'
   when: datadog_process_checks is defined
 
+
 - name: Ensure datadog-agent is running
-  service: name=datadog-agent state=started enabled=yes
+  service: name=datadog-agent state=started enabled={{datadog_service_enabled}}
   when: datadog_enabled
 
 - name: Ensure datadog-agent is not running
-  service: name=datadog-agent state=stopped enabled=no
+  service: name=datadog-agent state=stopped enabled={{datadog_service_enabled}}
   when: not datadog_enabled
 
 - name: Create a configuration file for each Datadog check
@@ -31,4 +32,18 @@
     owner: '{{ datadog_user }}'
     group: '{{ datadog_group }}'
   with_items: '{{ datadog_checks|list }}'
+  notify: restart datadog-agent
+
+
+
+
+
+
+- name: various checks
+  template:
+    src: "{{item}}.j2"
+    dest: "/etc/dd-agent/conf.d/{{ item }}"
+    owner: '{{ datadog_user }}'
+    group: '{{ datadog_group }}'
+  with_items: '{{ datadog_manual_checks }}'
   notify: restart datadog-agent
