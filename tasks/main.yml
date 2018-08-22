@@ -5,13 +5,15 @@
 - include_tasks: pkg-redhat.yml
   when: ansible_os_family == "RedHat"
 
-
 - import_tasks: dogstream.yml
   when: datadog_dogstreams
   tags: "datadog:dogstream"
 
-- import_tasks: agent5.yml
-  when: not datadog_agent6
+- include: pkg-suse.yml
+  when: ansible_os_family == "Suse"
 
-- import_tasks: agent6.yml
-  when: datadog_agent6
+- include: agent5.yml
+  when: datadog_agent5
+
+- include: agent6.yml
+  when: not datadog_agent5
