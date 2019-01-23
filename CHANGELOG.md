@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+# 2.4.0 / 2018-10-25
+
+* [FEATURE] Add support for "site" configuration.
+* [IMPROVEMENT] Add retry policy when failing to pull GPG key from keyserver.ubuntu.com
+
+# 2.3.1 / 2018-08-24
+
+* [FIX] Disabling repo metadata signature check for SUSE/SLES.
+
 # 2.3.0 / 2018-07-23
 
 * [FEATURE] Add support for SUSE/SLES (thanks to [@enarciso][]).
