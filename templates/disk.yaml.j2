@@ -1,8 +1,8 @@
 init_config:
 instances:
   - name: Root Disk
-    excluded_mountpoint_re: /mnt/.*
-    excluded_filesystems:
+    mount_point_blacklist: /mnt/.*
+    file_system_blacklist:
       - tmpfs
       - nfs
       - nsfs

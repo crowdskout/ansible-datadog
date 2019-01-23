@@ -29,11 +29,22 @@
   with_items: "{{ datadog_checks|list }}"
   notify: restart datadog-agent
 
+
 - name: Remove old configuration file for each Datadog check
   file:
     dest: "/etc/datadog-agent/conf.d/{{ item }}.yaml"
     state: absent
   with_items: "{{ datadog_checks|list }}"
+  notify: restart datadog-agent
+
+
+- name: Add Various checks
+  template:
+    src: "{{item}}.j2"
+    dest: "/etc/datadog-agent/conf.d/{{ item }}"
+    owner: '{{ datadog_user }}'
+    group: '{{ datadog_group }}'
+  with_items: '{{ datadog_manual_checks }}'
   notify: restart datadog-agent
 
 - name: Create trace agent configuration file
