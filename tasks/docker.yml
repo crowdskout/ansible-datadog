@@ -1,0 +1,10 @@
+- name: Get groups
+  shell: /usr/bin/getent group | awk -F":" '{print $1}'
+  register: datadog_etc_groups
+
+- name: Add datadog agent to groups
+  user: name="{{datadog_user}}" groups="{{item}}" append=yes
+  when: '"{{item}}" in datadog_etc_groups.stdout_lines'
+  with_items:
+    - docker
+  notify: restart datadog-agent

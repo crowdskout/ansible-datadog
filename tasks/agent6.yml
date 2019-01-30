@@ -40,8 +40,8 @@
 
 - name: Add Various checks
   template:
-    src: "{{item}}.j2"
-    dest: "/etc/datadog-agent/conf.d/{{ item }}"
+    src: "{{item}}.yaml.j2"
+    dest: "/etc/datadog-agent/conf.d/{{ item }}.d/conf.yaml"
     owner: '{{ datadog_user }}'
     group: '{{ datadog_group }}'
   with_items: '{{ datadog_manual_checks }}'
@@ -76,3 +76,6 @@
     state: stopped
     enabled: no
   when: not datadog_skip_running_check and not datadog_enabled
+
+
+- include: docker.yml
