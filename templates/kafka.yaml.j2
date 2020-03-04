@@ -381,3 +381,33 @@ init_config:
           Count:
             metric_type: rate
             alias: kafka.log.flush_rate.rate
+
+    ## Brokers: Per Topic Metrics
+    - include:
+      domain: 'kafka.server'
+      bean_regex: 'kafka\.server:type=BrokerTopicMetrics,name=BytesOutPerSec,topic=.*'
+      attribute:
+        Count:
+          metric_type: rate
+          alias: kafka.topics.net.bytes_out.rate
+    - include:
+        domain: 'kafka.server'
+        bean_regex: 'kafka\.server:type=BrokerTopicMetrics,name=BytesInPerSec,topic=.*'
+        attribute:
+          Count:
+            metric_type: rate
+            alias: kafka.topics.net.bytes_in.rate
+    - include:
+        domain: 'kafka.server'
+        bean_regex: 'kafka\.server:type=BrokerTopicMetrics,name=MessagesInPerSec,topic=.*'
+        attribute:
+          Count:
+            metric_type: rate
+            alias: kafka.topics.messages_in.rate
+    - include:
+        domain: 'kafka.server'
+        bean_regex: 'kafka\.server:type=BrokerTopicMetrics,name=BytesRejectedPerSec,topic=.*'
+        attribute:
+          Count:
+            metric_type: rate
+            alias: kafka.topics.net.bytes_rejected.rate
