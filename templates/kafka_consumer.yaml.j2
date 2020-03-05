@@ -1,0 +1,22 @@
+init_config:
+instances:
+  - kafka_connect_str:
+      - localhost:9092
+    zk_connect_str:
+      - localhost:2181
+    tags:
+       kafka: {{cs_hostname}}
+    kafka_consumer_offsets: True
+    consumer_groups:
+      geocoding_v1:  # consumer group name
+        maxwell: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]  # topic_name: list of partitions
+      profileindexing_v1:
+        mongo.Interactions.PageViews: [0, 1, 2]
+        maxwell: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]  # topic_name: list of partitions
+        mongo.Interactions.EmailSends: [0, 1, 2]
+      matchindexing_v1:
+        mongo.Interactions.PageViews: [0, 1, 2]
+        maxwell: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]  # topic_name: list of partitions
+        mongo.Interactions.EmailSends: [0, 1, 2]
+        
+    monitor_unlisted_consumer_groups: False
